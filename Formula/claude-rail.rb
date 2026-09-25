@@ -14,7 +14,7 @@ class ClaudeRail < Formula
   # The code repo is private for now: HEAD over SSH works for anyone with access. When a release
   # tarball exists, add `url` + `sha256` here and the tap works without SSH.
   url "https://github.com/dhamija/claude-rail-releases/releases/download/v0.1.0/claude-rail-0.1.0.tar.gz"
-  sha256 "3cd67ab1b235b6bad824f439bd20935c5704268b8ec6c378d6924fcb44dc12c8"
+  sha256 "783fd9c877fb34949d413a67ace2d561c14a4060ab69e4356e6fd0f97b4e9bed"
   version "0.1.0"
   head "git@github.com:dhamija/claude-rail.git", using: :git, branch: "main"
 
@@ -24,16 +24,25 @@ class ClaudeRail < Formula
 
   def install
     libexec.install Dir["*"]
+    # The app's dependencies (Electron, node-pty, xterm) are built here, where the sandbox allows
+    # it; the first launch only has to copy them into place.
+    cd libexec/"app" do
+      ENV["PATH"] = "#{Formula["node"].opt_bin}:#{ENV["PATH"]}"
+      system "npm", "install", "--no-audit", "--no-fund", "--loglevel=error"
+      system "./node_modules/.bin/electron-rebuild", "-f", "-w", "node-pty"
+      system "node", "build.js" unless (libexec/"app/dist/rail.js").exist?
+    end
     (bin/"claude-rail").write_env_script libexec/"bin/claude-rail", PATH: "#{Formula["node"].opt_bin}:$PATH"
     (bin/"claude-rail-app").write_env_script libexec/"bin/claude-rail-app", PATH: "#{Formula["node"].opt_bin}:$PATH"
   end
 
   def caveats
     <<~EOS
-      Finish with:
-        claude-rail setup
-      It deploys ~/.claude-rail, builds the Electron app, installs the skills and commands into
-      ~/.claude, enables the hooks and creates the Dock launcher. `claude-rail update` later.
+      Start it once to finish:
+        claude-rail-app --grid
+      The first launch deploys ~/.claude-rail, installs the skills and commands into ~/.claude,
+      enables the hooks and creates the Dock launcher (Homebrew cannot write there itself).
+      Later: `claude-rail update`.
     EOS
   end
 
