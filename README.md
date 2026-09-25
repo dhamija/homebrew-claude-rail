@@ -3,6 +3,7 @@
 ```bash
 brew tap dhamija/claude-rail                    # or, while the code repo is private:
 brew tap dhamija/claude-rail git@github.com:dhamija/homebrew-claude-rail.git
+brew trust --tap dhamija/claude-rail
 brew install --HEAD claude-rail && claude-rail setup
 ```
 

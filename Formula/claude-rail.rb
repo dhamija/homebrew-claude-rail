@@ -1,6 +1,7 @@
 # Homebrew formula for Claude Rail. Lives in the tap dhamija/claude-rail (repo homebrew-claude-rail):
 #   brew tap dhamija/claude-rail            # public tap; or, while the code repo is private:
 #   brew tap dhamija/claude-rail git@github.com:dhamija/homebrew-claude-rail.git
+#   brew trust --tap dhamija/claude-rail      # Homebrew 6: third-party taps load only once trusted
 #   brew install --HEAD claude-rail && claude-rail setup
 # brew puts the checkout under libexec and the CLIs on PATH; `claude-rail setup` then does what the
 # installer does (deploys ~/.claude-rail, builds the Electron app, installs the skills and commands
