@@ -23,12 +23,11 @@ class ClaudeRail < Formula
   depends_on :macos
 
   def install
+    # Only the runtime files go into the keg. The app's dependencies (Electron, node-pty, xterm)
+    # are built by the first launch, in ~/.claude-rail: Homebrew rewrites every Mach-O binary it
+    # finds in a keg, and Electron's framework cannot take that (it fails, and could be left half
+    # modified), so prebuilt binaries must stay out of here.
     libexec.install Dir["*"]
-    # The app's dependencies (Electron, node-pty, xterm) are built here, where the sandbox allows
-    # it; the first launch only has to copy them into place.
-    ENV["PATH"] = "#{Formula["node"].opt_bin}:#{ENV["PATH"]}"
-    system "bash", libexec/"bin/claude-rail-deps", libexec/"app"
-    system "node", "build.js" unless (libexec/"app/dist/rail.js").exist?
     (bin/"claude-rail").write_env_script libexec/"bin/claude-rail", PATH: "#{Formula["node"].opt_bin}:$PATH"
     (bin/"claude-rail-app").write_env_script libexec/"bin/claude-rail-app", PATH: "#{Formula["node"].opt_bin}:$PATH"
   end
@@ -37,8 +36,9 @@ class ClaudeRail < Formula
     <<~EOS
       Start it once to finish:
         claude-rail-app --grid
-      The first launch deploys ~/.claude-rail, installs the skills and commands into ~/.claude,
-      enables the hooks and creates the Dock launcher (Homebrew cannot write there itself).
+      The first launch deploys ~/.claude-rail and builds the app's dependencies there (about a
+      minute: Electron is downloaded), installs the skills and commands into ~/.claude, enables
+      the hooks and creates the Dock launcher. Homebrew cannot write there itself.
       Later: `claude-rail update`.
     EOS
   end
