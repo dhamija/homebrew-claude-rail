@@ -13,9 +13,9 @@ class ClaudeRail < Formula
   license "MIT"
   # The code repo is private for now: HEAD over SSH works for anyone with access. When a release
   # tarball exists, add `url` + `sha256` here and the tap works without SSH.
-  url "https://github.com/dhamija/claude-rail-releases/releases/download/v0.1.18/claude-rail-0.1.18.tar.gz"
-  sha256 "32dc576ca6d8ec94096575c137dccd217a64426b33d6ef03fb3127d513cc0bd0"
-  version "0.1.18"
+  url "https://github.com/dhamija/claude-rail-releases/releases/download/v0.1.19/claude-rail-0.1.19.tar.gz"
+  sha256 "54f7f5617cf6d4384a20cc5b32b0d1af890ab1f9c04ad302ead0c253d491b92a"
+  version "0.1.19"
   head "git@github.com:dhamija/claude-rail.git", using: :git, branch: "main"
 
   depends_on "node"
