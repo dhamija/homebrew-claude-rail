@@ -12,13 +12,14 @@ class ClaudeRail < Formula
   homepage "https://github.com/dhamija/claude-rail"
   # The release tarball is public (the code repo is private: HEAD over SSH works for anyone with
   # access). scripts/release.sh rewrites url and sha256; the version is read from the url.
-  url "https://github.com/dhamija/claude-rail-releases/releases/download/v0.1.50/claude-rail-0.1.50.tar.gz"
-  sha256 "6dba506782148a3bd3a3a0d23f51788c9a954abdd3f64ce81cc699b362332c3a"
+  url "https://github.com/dhamija/claude-rail-releases/releases/download/v0.1.51/claude-rail-0.1.51.tar.gz"
+  sha256 "df62248920faeaa74cc9712acb59ccdbfe365982602c6b37849a4ec65634f39c"
   license "MIT"
   head "git@github.com:dhamija/claude-rail.git", using: :git, branch: "main"
 
   depends_on :macos
   depends_on "node"
+  depends_on "poppler" # lets Claude Code's Read tool open PDFs, which the viewer's reader relies on
   depends_on "python@3.13"
 
   def install
