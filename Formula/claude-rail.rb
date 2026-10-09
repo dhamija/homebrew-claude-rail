@@ -12,8 +12,8 @@ class ClaudeRail < Formula
   homepage "https://github.com/dhamija/claude-rail"
   # The release tarball is public (the code repo is private: HEAD over SSH works for anyone with
   # access). scripts/release.sh rewrites url and sha256; the version is read from the url.
-  url "https://github.com/dhamija/claude-rail-releases/releases/download/v0.1.141/claude-rail-0.1.141.tar.gz"
-  sha256 "337f3b43b4862b48564bb075927ac5bf81dd99f923bb10e2d1e276add94149ae"
+  url "https://github.com/dhamija/claude-rail-releases/releases/download/v0.1.142/claude-rail-0.1.142.tar.gz"
+  sha256 "91991be250ba1b6a84164e02469f9d8869abb955bbfc9fcb7392e4cb34b65424"
   license "MIT"
   head "git@github.com:dhamija/claude-rail.git", using: :git, branch: "main"
 
